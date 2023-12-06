@@ -12,17 +12,21 @@ interface Data {
   };
 }
 
-interface Round {
-  Association: string;
-  Crombie: number;
-  ErskineSmith: number;
+export interface Round {
+  Association?: string;
+  Crombie?: number;
+  ErskineSmith?: number;
   Hsu?: number;
   Naqvi?: number;
-  Valid: number;
-  Invalid: number;
-  Exhausted: number;
-  Cast: number;
-  Points: number;
+  Valid?: number;
+  Invalid?: number;
+  Exhausted?: number;
+  Cast?: number;
+  Points?: number;
+  Points_Crombie?: number;
+  Points_Erskine_Smith?: number;
+  Points_Hsu?: number;
+  Points_Naqvi?: number;
   Eligible?: number;
 }
 
