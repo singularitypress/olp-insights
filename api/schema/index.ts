@@ -30,7 +30,7 @@ export const typeDefs = /* GraphQL */ `
   type Round {
     Association: String
     Crombie: Float
-    ErskineSmith: Float
+    Erskine_Smith: Float
     Hsu: Float
     Naqvi: Float
     Valid: Int
@@ -38,6 +38,10 @@ export const typeDefs = /* GraphQL */ `
     Exhausted: Int
     Cast: Int
     Points: Int
+    Points_Crombie: Float
+    Points_Erskine_Smith: Float
+    Points_Hsu: Float
+    Points_Naqvi: Float
     Eligible: Int
   }
 

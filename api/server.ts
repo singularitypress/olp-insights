@@ -18,9 +18,11 @@ const yoga = createYoga({
   }),
   graphiql: {
     defaultQuery: /* GraphQL */ `
-      query {
-        results(round: ROUND_01) {
+      {
+        round_1: results(year: 2023, variant: LEADERSHIP, round: 1) {
+          Association
           Hsu
+          Erskine_Smith
         }
       }
     `,

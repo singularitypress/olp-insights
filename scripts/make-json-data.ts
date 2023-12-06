@@ -19,7 +19,21 @@ const data: Data[] = [
 ];
 
 const convertCsvToJson = async (filePath: string) => {
-  const jsonArray = await csv().fromString(readFileSync(filePath, "utf-8"));
+  const csvStr = readFileSync(filePath, "utf-8");
+  const [header] = csvStr.split("\n");
+  const [_, pointKeys] = header.split(",Points,");
+  const tmp = pointKeys
+    .split(",")
+    .map((key) => {
+      if (key) {
+        return `Points_${key}`;
+      }
+      return key;
+    })
+    .join(",");
+  const jsonArray = await csv().fromString(
+    csvStr.replace(/^.*/, header.replace(/,Points,.*/, `,Points,${tmp}`))
+  );
   return jsonArray.map((item) => {
     Object.keys(item).forEach((key) => {
       if (item[key] === "" || item[key] === "-") {
@@ -60,7 +74,7 @@ const writeJsonData = async (data: Data[]) => {
     };
   }
   const outputFilePath = path.join(__dirname, "../data/data.json");
-  writeFileSync(outputFilePath, JSON.stringify(jsonData, null, 2));
+  writeFileSync(outputFilePath, JSON.stringify(jsonData));
 };
 
 writeJsonData(data);
