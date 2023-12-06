@@ -1,4 +1,16 @@
-import { type } from "os";
+interface Data {
+  leadership?: {
+    [key: string]: {
+      // year
+      [key: string]: Round[]; // round (1, 2, 3, 4)
+    };
+  };
+  general?: {
+    [key: string]: {
+      [key: string]: Round[];
+    };
+  };
+}
 
 interface Round {
   Association: string;
@@ -29,39 +41,47 @@ export const typeDefs = /* GraphQL */ `
     Eligible: Int
   }
 
-  enum RoundName {
-    ROUND_01
-    ROUND_02
-    ROUND_03
+  enum Variant {
+    LEADERSHIP
+    GENERAL
   }
 
   type Query {
-    results(round: RoundName!, association: String): [Round]
+    results(
+      round: Int!
+      year: Int!
+      variant: Variant!
+      association: String
+    ): [Round]
   }
 `;
 
-type RoundName = "ROUND_01" | "ROUND_02" | "ROUND_03";
-
-const ROUND_NAMES = {
-  ROUND_01: "olp-round-01",
-  ROUND_02: "olp-round-02",
-  ROUND_03: "olp-round-03",
-};
-
-export const resolvers = (data: { [key: string]: Round[] }) => ({
+export const resolvers = (data: Data) => ({
   Query: {
     results: (
       _parent: any,
-      { round, association }: { round: RoundName; association?: string },
+      {
+        round,
+        year,
+        variant,
+        association,
+      }: {
+        round: number;
+        year: number;
+        variant: "LEADERSHIP" | "GENERAL";
+        association?: string;
+      },
       _context: any,
       _info: any
     ) => {
       if (association) {
-        return data[ROUND_NAMES[round]].filter(
-          (r) => r.Association === association
-        );
+        return data?.[variant.toLocaleLowerCase() as keyof typeof data]?.[
+          `${year}`
+        ][`${round}`].filter((r) => r.Association === association);
       }
-      return data[ROUND_NAMES[round]];
+      return data?.[variant.toLocaleLowerCase() as keyof typeof data]?.[
+        `${year}`
+      ][`${round}`];
     },
   },
 });

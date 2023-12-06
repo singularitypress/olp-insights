@@ -36,5 +36,5 @@ yarn-error.log*
 next-env.d.ts
 
 # data
-data/*.csv
-data/*.json
+data/**/*.csv
+data/**/*.json
