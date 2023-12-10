@@ -15,7 +15,7 @@ interface Data {
 export interface Round {
   Association?: string;
   Crombie?: number;
-  ErskineSmith?: number;
+  Erskine_Smith?: number;
   Hsu?: number;
   Naqvi?: number;
   Valid?: number;

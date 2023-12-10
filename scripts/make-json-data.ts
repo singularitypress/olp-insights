@@ -32,7 +32,10 @@ const convertCsvToJson = async (filePath: string) => {
     })
     .join(",");
   const jsonArray = await csv().fromString(
-    csvStr.replace(/^.*/, header.replace(/,Points,.*/, `,Points,${tmp}`))
+    csvStr.replace(
+      /^.*/,
+      header.replace(/,Points,.*/, `,Points,${tmp}`).replace("-", "_")
+    )
   );
   return jsonArray.map((item) => {
     Object.keys(item).forEach((key) => {
