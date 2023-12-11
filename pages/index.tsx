@@ -106,34 +106,6 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      data: [
-        [
-          "round",
-          ...Object.keys(round1Total).sort(
-            (a, b) =>
-              (round1Total[b as keyof Round] as any as number) -
-              (round1Total[a as keyof Round] as any as number)
-          ),
-        ],
-        [
-          "Round 1",
-          ...Object.values(round1Total).sort(
-            (a, b) => (b as any as number) - (a as any as number)
-          ),
-        ],
-        [
-          "Round 2",
-          ...Object.values(round2Total).sort(
-            (a, b) => (b as any as number) - (a as any as number)
-          ),
-        ],
-        [
-          "Round 3",
-          ...Object.values(round3Total).sort(
-            (a, b) => (b as any as number) - (a as any as number)
-          ),
-        ],
-      ],
       sankey: [
         ["From", "To", "Votes"],
         ...sankeyLinks([round1Total, round2Total, round3Total]),
@@ -145,41 +117,15 @@ export async function getServerSideProps() {
 const inter = Inter({ subsets: ["latin"] });
 
 type Props = {
-  data: any;
   sankey: (string | number)[][];
 };
 
-export default function Home({ data, sankey }: Props) {
+export default function Home({ sankey }: Props) {
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
-      <div className="grid grid-cols-2 gap-4 w-full">
-        <Chart
-          options={{
-            isStacked: "relative",
-            legend: { position: "top", maxLines: 3 },
-            vAxis: {
-              minValue: 0,
-            },
-          }}
-          chartType="AreaChart"
-          width="100%"
-          height="600px"
-          data={data}
-        />
-        <Chart
-          options={{
-            legend: { position: "top", maxLines: 3 },
-            vAxis: {
-              minValue: 0,
-            },
-          }}
-          chartType="AreaChart"
-          width="100%"
-          height="600px"
-          data={data}
-        />
+      <div className="grid grid-cols-1 gap-4 w-full">
         <Chart
           chartType="Sankey"
           width="100%"
