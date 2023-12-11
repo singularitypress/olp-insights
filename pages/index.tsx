@@ -10,6 +10,7 @@ query {
     Erskine_Smith
     Crombie
     Naqvi
+    Exhausted
   }
 }
 `;
@@ -41,7 +42,6 @@ const sankeyLinks = (rounds: Round[]) => {
     );
 
     const diff = roundAKeys.filter((x) => !roundBKeys.includes(x));
-    console.log(diff);
 
     roundAKeys.forEach((key) => {
       if (key === diff[0]) {
@@ -154,9 +154,6 @@ export default function Home({ data, sankey }: Props) {
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
-      <pre>
-        <code>{JSON.stringify(sankey, null, 2)}</code>
-      </pre>
       <div className="grid grid-cols-2 gap-4 w-full">
         <Chart
           options={{
